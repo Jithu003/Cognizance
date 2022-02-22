@@ -1,2 +1,0 @@
-# Cognizance
-First Task
