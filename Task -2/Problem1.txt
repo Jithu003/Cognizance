@@ -1,0 +1,19 @@
+Pseudo Code for Problem 1
+
+Program to check whether a number is divisible by 3 or not.
+
+Start
+
+Declare num, rem
+Display "Program to check whether number is divisible by 3"
+Display "Enter the number : "
+Input num
+while num>=3:
+     num-=3
+Assign rem = num
+if rem==0:
+    Display "True"
+else:
+    Display "False"
+
+Stop

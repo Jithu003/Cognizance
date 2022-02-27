@@ -1,0 +1,22 @@
+Pseudo Code for Problem 2
+
+Program to print the nth term of a fibonacci series.
+
+Start
+
+Declare n,i,j,k,x
+Display "Program to print the nth term of fibonacci series"
+Assign i=0
+Assign j=1
+Display "Enter the value of n:"
+Input n
+Assign x=1
+While n>x:
+     Assign k=i+j
+     Assign i=j
+     Assign j=k
+     Assign x=x+1
+Display "F"&"("& n &")"&"="& k
+
+Stop
+
