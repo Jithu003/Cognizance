@@ -1,0 +1,197 @@
+<html>
+  <head>
+    <title>Todo App</title>
+  </head>
+  <body>
+    <div class="container">
+      <p>
+        <label for="new-task">Add Item</label><input id="new-task" type="text"><button>Add</button>
+      </p>      
+      <h3>To do</h3>
+      <ul id="incomplete-tasks"> </ul>      
+      <h3>Completed</h3>
+      <ul id="completed-tasks"></ul>
+    </div>
+<style>
+body {
+  background-image: url(https://cdn.wallpapersafari.com/55/13/4KtLmN.jpg) ;
+  color: rgb(14, 13, 13);
+  font-family: Lato, sans-serif;
+}
+.container {
+  display: block;
+  width: 400px;
+  margin: 100px auto 0;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+li * {
+  float: left;
+}
+li, h3 {
+  clear:both;
+  list-style:none;
+}
+input, button {
+  outline: none;
+}
+button {
+  background: gray;
+  border: 0px;
+  color: rgb(255, 220, 24);
+  font-size: 15px;
+  width: 100px;
+  margin: 10px 0 0;
+  font-family: Lato, sans-serif;
+  cursor: pointer;
+}
+button:hover {
+  color: rgb(3, 3, 3);
+}
+/* Heading */
+h3,
+label[for='new-task'] {
+  color: rgb(119, 25, 25);
+  font-weight: 700;
+  font-size: 18px;
+  border-bottom: 2px solid #333;
+  padding: 30px 0 10px;
+  margin: 0;
+  text-transform: uppercase;
+}
+input[type="text"] {
+  margin: 0;
+  font-size: 15px;
+  line-height: 18px;
+  height: 30px;
+  padding: 10px;
+  border: 1px solid rgb(199, 195, 195);
+  background: rgb(253, 253, 253);
+  border-radius: 6px;
+  font-family: Lato, sans-serif;
+  color: #888;
+}
+input[type="text"]:focus {
+  color: rgb(3, 3, 3);
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+label[for='new-task'] {
+  display: block;
+  margin: 0 0 20px;
+}
+input#new-task {
+  float: left;
+  width: 318px;
+}
+p > button:hover {
+  color: #10c23c;
+}
+li {
+  overflow: hidden;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+li > input[type="checkbox"] {
+  margin: 0 10px;
+  position: relative;
+  top: 15px;
+}
+li > label {
+  font-size: 18px;
+  line-height: 40px;
+  width: 237px;
+  padding: 0 0 0 11px;
+}
+li >  input[type="text"] {
+  width: 226px;
+}
+li > .delete:hover {
+  color: #000000;
+}
+#completed-tasks label {
+  text-decoration: line-through;
+  color: rgb(112, 112, 112);
+}
+
+ul li input[type=text] {
+  display:none;
+}
+</style>
+<script >
+var taskInput=document.getElementById("new-task");
+var addButton=document.getElementsByTagName("button")[0];
+var incompleteTaskHolder=document.getElementById("incomplete-tasks");
+var completedTasksHolder=document.getElementById("completed-tasks");
+var createNewTaskElement=function(taskString){
+	var listItem=document.createElement("li");
+	var checkBox=document.createElement("input");
+	var label=document.createElement("label");
+	var editInput=document.createElement("input");
+	var deleteButton=document.createElement("button");
+	label.innerText=taskString;
+	checkBox.type="checkbox";
+	editInput.type="text";
+	deleteButton.innerText="Delete";
+	deleteButton.className="delete";
+	listItem.appendChild(checkBox);
+	listItem.appendChild(label);
+	listItem.appendChild(editInput);
+	listItem.appendChild(deleteButton);
+	return listItem;
+}
+var addTask=function(){
+	console.log("Add Task...");
+	var listItem=createNewTaskElement(taskInput.value);
+	incompleteTaskHolder.appendChild(listItem);
+	bindTaskEvents(listItem, taskCompleted);
+	taskInput.value="";
+}
+var deleteTask=function(){
+		console.log("Delete Task...");
+
+		var listItem=this.parentNode;
+		var ul=listItem.parentNode;
+		ul.removeChild(listItem);
+}
+var taskCompleted=function(){
+		console.log("Complete Task...");
+	var listItem=this.parentNode;
+	completedTasksHolder.appendChild(listItem);
+				bindTaskEvents(listItem, taskIncomplete);
+}
+var taskIncomplete=function(){
+		console.log("Incomplete Task...");
+		var listItem=this.parentNode;
+	incompleteTaskHolder.appendChild(listItem);
+			bindTaskEvents(listItem,taskCompleted);
+}
+var ajaxRequest=function(){
+	console.log("AJAX Request");
+}
+addButton.onclick=addTask;
+addButton.addEventListener("click",addTask);
+addButton.addEventListener("click",ajaxRequest);
+
+var bindTaskEvents=function(taskListItem,checkBoxEventHandler){
+	console.log("bind list item events");
+	var checkBox=taskListItem.querySelector("input[type=checkbox]");	
+	var deleteButton=taskListItem.querySelector("button.delete");
+			deleteButton.onclick=deleteTask;
+			checkBox.onchange=checkBoxEventHandler;
+}
+
+	for (var i=0; i<incompleteTaskHolder.children.length;i++){
+
+		bindTaskEvents(incompleteTaskHolder.children[i],taskCompleted);
+	}
+
+	for (var i=0; i<completedTasksHolder.children.length;i++){
+		bindTaskEvents(completedTasksHolder.children[i],taskIncomplete);
+	}
+
+   </script>
+
+  </body>
+</html>
